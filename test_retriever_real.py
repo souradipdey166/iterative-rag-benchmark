@@ -14,5 +14,5 @@ retriever.index(chunks)
 
 results = retriever.query("What year was the Eiffel Tower completed?", top_k=2)
 for r in results:
-    print(f"source={r['source_id']} distance={r['distance']:.3f}")
+    print(f"source={r['source_id']} distance={r['distance']:.3f} chunk_id = {r['chunk_id']}")
     print(f"  {r['text']}")
