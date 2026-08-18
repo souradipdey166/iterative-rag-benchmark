@@ -1,0 +1,232 @@
+[
+  {
+    "id": "5a8b57f25542995d1e6f1371",
+    "question": "Were Scott Derrickson and Ed Wood of the same nationality?",
+    "gold_answer": "yes",
+    "single_shot": {
+      "answer": "insufficient information",
+      "em": 0,
+      "f1": 0.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 1,
+      "time_sec": 2.0852887630462646
+    },
+    "iterative": {
+      "answer": "Yes.",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 2,
+      "time_sec": 2.4531095027923584
+    }
+  },
+  {
+    "id": "5a8c7595554299585d9e36b6",
+    "question": "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?",
+    "gold_answer": "Chief of Protocol",
+    "single_shot": {
+      "answer": "insufficient information",
+      "em": 0,
+      "f1": 0.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 1,
+      "time_sec": 1.4474785327911377
+    },
+    "iterative": {
+      "answer": "United States ambassador to Ghana",
+      "em": 0,
+      "f1": 0.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 2,
+      "time_sec": 2.8010852336883545
+    }
+  },
+  {
+    "id": "5a85ea095542994775f606a8",
+    "question": "What science fantasy young adult series, told in first person, has a set of companion books narrating the stories of enslaved worlds and alien species?",
+    "gold_answer": "Animorphs",
+    "single_shot": {
+      "answer": "Animorphs",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 1.0,
+      "hops": 1,
+      "time_sec": 1.1231389045715332
+    },
+    "iterative": {
+      "answer": "Animorphs",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 1.0,
+      "hops": 2,
+      "time_sec": 20.22922396659851
+    }
+  },
+  {
+    "id": "5adbf0a255429947ff17385a",
+    "question": "Are the Laleli Mosque and Esma Sultan Mansion located in the same neighborhood?",
+    "gold_answer": "no",
+    "single_shot": {
+      "answer": "No.",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 1.0,
+      "hops": 1,
+      "time_sec": 4.251488208770752
+    },
+    "iterative": {
+      "answer": "No.",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 1.0,
+      "hops": 1,
+      "time_sec": 8.641640424728394
+    }
+  },
+  {
+    "id": "5a8e3ea95542995a26add48d",
+    "question": "The director of the romantic comedy \"Big Stone Gap\" is based in what New York city?",
+    "gold_answer": "Greenwich Village, New York City",
+    "single_shot": {
+      "answer": "insufficient information",
+      "em": 0,
+      "f1": 0.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 1,
+      "time_sec": 1.184410572052002
+    },
+    "iterative": {
+      "answer": "Greenwich Village, New York City",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 2,
+      "time_sec": 23.924113512039185
+    }
+  },
+  {
+    "id": "5abd94525542992ac4f382d2",
+    "question": "2014 S/S is the debut album of a South Korean boy group that was formed by who?",
+    "gold_answer": "YG Entertainment",
+    "single_shot": {
+      "answer": "YG Entertainment",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 1,
+      "time_sec": 0.9073803424835205
+    },
+    "iterative": {
+      "answer": "insufficient information",
+      "em": 0,
+      "f1": 0.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 1,
+      "time_sec": 14.011848449707031
+    }
+  },
+  {
+    "id": "5a85b2d95542997b5ce40028",
+    "question": "Who was known by his stage name Aladin and helped organizations improve their performance as a consultant?",
+    "gold_answer": "Eenasul Fateh",
+    "single_shot": {
+      "answer": "Eenasul Fateh",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 1.0,
+      "hops": 1,
+      "time_sec": 2.9537761211395264
+    },
+    "iterative": {
+      "answer": "Eenasul Fateh",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 1.0,
+      "hops": 1,
+      "time_sec": 8.645996332168579
+    }
+  },
+  {
+    "id": "5a87ab905542996e4f3088c1",
+    "question": "The arena where the Lewiston Maineiacs played their home games can seat how many people?",
+    "gold_answer": "3,677 seated",
+    "single_shot": {
+      "answer": "3,677",
+      "em": 0,
+      "f1": 0.6666666666666666,
+      "retrieval_hit": 1,
+      "retrieval_recall": 1.0,
+      "hops": 1,
+      "time_sec": 0.8071200847625732
+    },
+    "iterative": {
+      "answer": "3,677",
+      "em": 0,
+      "f1": 0.6666666666666666,
+      "retrieval_hit": 1,
+      "retrieval_recall": 1.0,
+      "hops": 1,
+      "time_sec": 10.718330144882202
+    }
+  },
+  {
+    "id": "5a7bbb64554299042af8f7cc",
+    "question": "Who is older, Annie Morton or Terry Richardson?",
+    "gold_answer": "Terry Richardson",
+    "single_shot": {
+      "answer": "insufficient information",
+      "em": 0,
+      "f1": 0.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 1,
+      "time_sec": 2.454871892929077
+    },
+    "iterative": {
+      "answer": "Terry Richardson.",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 2,
+      "time_sec": 15.150757789611816
+    }
+  },
+  {
+    "id": "5a8db19d5542994ba4e3dd00",
+    "question": "Are Local H and For Against both from the United States?",
+    "gold_answer": "yes",
+    "single_shot": {
+      "answer": "insufficient information",
+      "em": 0,
+      "f1": 0.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 1,
+      "time_sec": 0.7078661918640137
+    },
+    "iterative": {
+      "answer": "Yes.",
+      "em": 1,
+      "f1": 1.0,
+      "retrieval_hit": 1,
+      "retrieval_recall": 0.5,
+      "hops": 2,
+      "time_sec": 16.134110689163208
+    }
+  }
+]
