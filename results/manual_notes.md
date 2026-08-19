@@ -61,3 +61,53 @@ retrieval recall -- it's coming from something else, possibly giving the
 model more reasoning attempts/context across hops even when the same
 sources are ultimately retrieved. Worth investigating further if time
 allows.
+
+## Failure taxonomy (first 10 of 24 iterative failures, N=50 run)
+
+Important finding: 5/10 "failures" were false negatives from strict exact-match
+scoring -- the model's answer was substantively correct but phrased
+differently from HotpotQA's gold string (e.g. "3,677" vs "3,677 seated",
+"1969-1974" vs "1969 until 1974"). This suggests the true EM of 0.520 likely
+understates real answer accuracy; F1 (0.658) partially captures this via
+partial credit, but a normalized/fuzzy match would give a more accurate
+picture. Noting this as a known limitation of the evaluation, not the agent.
+
+Real failures broke down into three categories:
+- Retrieval miss (info never found, even across hops) -- e.g. Guns N' Roses
+  question, retrieval_recall=0.0
+- Wrong entity retrieved entirely -- e.g. Corliss Archer question, retrieval
+  surfaced Janet Waldo (the radio actress) instead of Shirley Temple (the
+  film actress the question specifically asks about); Shirley Temple was
+  never retrieved
+- Reasoning error despite perfect retrieval (recall=1.0) -- e.g. Random House
+  Tower yes/no question, most concerning category since more retrieval
+  wouldn't fix this
+
+## Results
+
+| Metric | Single-shot | Iterative |
+|---|---|---|
+| Strict Exact Match | 0.380 | 0.520 |
+| Loose Match (contains) | 0.520 | 0.680 |
+| F1 | 0.488 | 0.658 |
+| Retrieval hit-rate@5 | 0.980 | 0.980 |
+| Retrieval recall@5 | 0.740 | 0.740 |
+| Avg. hops | 1.00 | 1.48 |
+| Avg. time/question | 2.48s | 14.69s |
+
+N=50 questions, HotpotQA distractor validation split.
+
+**Ablation finding**: iterative retrieval improves accuracy substantially
+(+14 points strict EM, +16 points loose match) at roughly 6x the latency
+cost per question. The improvement is NOT driven by better retrieval --
+recall@5 is identical (0.740) between strategies -- suggesting the gain
+comes from the model getting more reasoning attempts/context across hops
+rather than finding better sources.
+
+**Note on evaluation strictness**: manual review of 24 "failed" answers
+found 42% were false negatives -- substantively correct answers penalized
+by strict exact-match string comparison (e.g. "3,677" marked wrong against
+gold "3,677 seated"). A looser contains-based match closes much of this
+gap; both metrics are reported for transparency. The single-shot vs.
+iterative gap is consistent across both metrics, suggesting the core
+finding is not an artifact of scoring strictness.

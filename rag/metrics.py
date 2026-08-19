@@ -63,3 +63,15 @@ def precision_recall_at_k(retrieved_ids: list[str], gold_ids: list[str], k: int)
     recall = len(hits) / len(gold_set)
     hit = int(len(hits) > 0)
     return {"precision": precision, "recall": recall, "hit": hit}
+
+def contains_match(prediction: str, gold: str) -> int:
+    """
+    Looser than exact_match: correct if the gold answer's normalized tokens
+    are a subset of the prediction's, or vice versa. Catches cases like
+    "3,677" vs "3,677 seated" that strict EM wrongly marks wrong.
+    """
+    pred_tokens = set(normalize_answer(prediction).split())
+    gold_tokens = set(normalize_answer(gold).split())
+    if not pred_tokens or not gold_tokens:
+        return 0
+    return int(gold_tokens.issubset(pred_tokens) or pred_tokens.issubset(gold_tokens))
