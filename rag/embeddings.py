@@ -23,3 +23,4 @@ class TfidfEmbedder:
         else:
             vectors = self.vectorizer.transform(texts)
         return vectors.toarray().tolist()
+    
