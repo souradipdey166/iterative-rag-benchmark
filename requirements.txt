@@ -4,3 +4,4 @@ scikit-learn==1.6.1
 langchain-groq==0.3.8
 python-dotenv==1.2.1
 chromadb==1.5.9
+audioop-lts==0.2.2
