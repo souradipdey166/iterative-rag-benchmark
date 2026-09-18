@@ -5,6 +5,9 @@ from datasets import load_dataset
 from rag.chunking import chunk_paragraphs
 from rag.retriever import Retriever
 from rag.agent import answer_single_shot, answer_iterative
+import os
+import gradio as gr
+from datasets import load_dataset
 
 ds = load_dataset("hotpot_qa", "distractor", split="validation[:50]")
 question_choices = {ex["question"]: ex for ex in ds}
@@ -40,4 +43,7 @@ demo = gr.Interface(
     description="Pick a real HotpotQA question and watch both strategies attempt it live. See results/manual_notes.md in the repo for the full 50-question ablation.",
 )
 
-demo.launch()
+demo.launch(
+    server_name="0.0.0.0",
+    server_port=int(os.environ.get("PORT", 7860))
+)
