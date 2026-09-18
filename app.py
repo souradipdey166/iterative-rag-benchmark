@@ -1,20 +1,17 @@
 # app.py -- Gradio, deployed to Render / Hugging Face Spaces
 
 import os
+import json
 
 import gradio as gr
-from datasets import load_dataset
 
 from rag.chunking import chunk_paragraphs
 from rag.retriever import Retriever
 from rag.agent import answer_single_shot, answer_iterative
 
 
-ds = load_dataset(
-    "hotpot_qa",
-    "distractor",
-    split="validation[:50]"
-)
+with open("hotpotqa_50.json", "r", encoding="utf-8") as f:
+    ds = json.load(f)
 
 question_choices = {
     ex["question"]: ex
@@ -97,6 +94,5 @@ demo = gr.Interface(
 
 demo.launch(
     server_name="0.0.0.0",
-    server_port=int(os.environ.get("PORT", 7860)),
-    share=True
+    server_port=int(os.environ.get("PORT", 7860))
 )
