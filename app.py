@@ -1,14 +1,14 @@
-# app.py -- Gradio, deployed to Render / Hugging Face Spaces
-
-import os
 import json
-
-import gradio as gr
+import streamlit as st
 
 from rag.chunking import chunk_paragraphs
 from rag.retriever import Retriever
 from rag.agent import answer_single_shot, answer_iterative
 
+
+# -----------------------------
+# Load demo dataset
+# -----------------------------
 
 with open("hotpotqa_50.json", "r", encoding="utf-8") as f:
     ds = json.load(f)
@@ -19,80 +19,142 @@ question_choices = {
 }
 
 
-def run_comparison(question_text):
-    example = question_choices[question_text]
+# -----------------------------
+# Page configuration
+# -----------------------------
+
+st.set_page_config(
+    page_title="Multi-hop RAG Benchmark",
+    page_icon="🔎",
+    layout="wide"
+)
+
+st.title("🔎 Multi-hop RAG: Single-shot vs Iterative Retrieval")
+
+st.markdown(
+    """
+Compare two RAG strategies on real HotpotQA questions.
+
+- **Single-shot RAG** → retrieves context once and answers.
+- **Iterative RAG** → retrieves context, reasons about the result,
+  generates another search query, and continues for multiple hops.
+"""
+)
+
+
+# -----------------------------
+# Question selector
+# -----------------------------
+
+question = st.selectbox(
+    "Choose a HotpotQA question:",
+    list(question_choices.keys())
+)
+
+
+# -----------------------------
+# Run comparison
+# -----------------------------
+
+if st.button("🚀 Run RAG Comparison", type="primary"):
+
+    example = question_choices[question]
 
     paragraphs = [
         {
-            "id": t,
-            "title": t,
-            "text": " ".join(s)
+            "id": title,
+            "title": title,
+            "text": " ".join(sentences)
         }
-        for t, s in zip(
+        for title, sentences in zip(
             example["context"]["title"],
             example["context"]["sentences"]
         )
     ]
 
-    chunks = chunk_paragraphs(
-        paragraphs,
-        chunk_size=300,
-        overlap=50
+    with st.spinner("Running RAG agents..."):
+
+        # Chunk documents
+        chunks = chunk_paragraphs(
+            paragraphs,
+            chunk_size=300,
+            overlap=50
+        )
+
+        # Create temporary Chroma collection
+        retriever = Retriever(
+            collection_name="demo"
+        )
+
+        retriever.index(chunks)
+
+        # -------------------------
+        # Single-shot RAG
+        # -------------------------
+
+        single = answer_single_shot(
+            question,
+            retriever,
+            top_k=5
+        )
+
+        # -------------------------
+        # Iterative RAG
+        # -------------------------
+
+        iterative = answer_iterative(
+            question,
+            retriever,
+            top_k=5,
+            max_hops=3
+        )
+
+    # -----------------------------
+    # Results
+    # -----------------------------
+
+    st.divider()
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.subheader("Single-shot RAG")
+
+        st.markdown("**Answer**")
+
+        st.info(single["answer"])
+
+        st.markdown("**Retrieved sources**")
+
+        st.write(single["retrieved_source_ids"])
+
+    with col2:
+
+        st.subheader("Iterative RAG")
+
+        st.markdown("**Answer**")
+
+        st.info(iterative["answer"])
+
+        st.markdown("**Hops used**")
+
+        st.write(iterative["hops"])
+
+        st.markdown("**Retrieved sources**")
+
+        st.write(iterative["retrieved_source_ids"])
+
+    # -----------------------------
+    # Gold answer
+    # -----------------------------
+
+    st.divider()
+
+    st.subheader("🎯 Gold Answer")
+
+    st.success(example["answer"])
+
+    st.caption(
+        "Ground-truth answer from the HotpotQA example."
     )
-
-    retriever = Retriever(collection_name="demo")
-    retriever.index(chunks)
-
-    single = answer_single_shot(
-        question_text,
-        retriever,
-        top_k=5
-    )
-
-    iterative = answer_iterative(
-        question_text,
-        retriever,
-        top_k=5,
-        max_hops=3
-    )
-
-    return (
-        f"{single['answer']}\n\n"
-        f"Sources: {single['retrieved_source_ids']}",
-
-        f"{iterative['answer']}\n\n"
-        f"Hops: {iterative['hops']}\n"
-        f"Sources: {iterative['retrieved_source_ids']}",
-
-        example["answer"],
-    )
-
-
-demo = gr.Interface(
-    fn=run_comparison,
-
-    inputs=gr.Dropdown(
-        choices=list(question_choices.keys()),
-        label="Pick a HotpotQA question"
-    ),
-
-    outputs=[
-        gr.Textbox(label="Single-shot answer"),
-        gr.Textbox(label="Iterative (multi-hop) answer"),
-        gr.Textbox(label="Gold answer"),
-    ],
-
-    title="Multi-hop RAG: Single-shot vs. Iterative Retrieval",
-
-    description=(
-        "Pick a real HotpotQA question and watch both strategies "
-        "attempt it live. See results/manual_notes.md in the repo "
-        "for the full 50-question ablation."
-    ),
-)
-
-
-demo.launch(
-    server_name="0.0.0.0",
-    server_port=int(os.environ.get("PORT", 7860))
-)
