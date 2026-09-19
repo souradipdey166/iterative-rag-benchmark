@@ -9,7 +9,7 @@ import chromadb
 class Retriever:
     def __init__(self, collection_name: str = "corpus"):
         self.client = chromadb.EphemeralClient()
-        self.collection = self.client.create_collection(collection_name)
+        self.collection = self.client.get_or_create_collection(collection_name)
 
     def index(self, chunks: list[dict]):
         """chunks: list of {"chunk_id", "source_id", "title", "text"}"""
