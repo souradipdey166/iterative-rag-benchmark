@@ -1,7 +1,5 @@
 # Multi-hop RAG Agent
 
-# Lending Club Loan Default Risk Prediction
-
 ## Live Demo
 
 [Streamlit App](https://iterative-rag-benchmark-clmrfsuohwxjwwrpmjqqev.streamlit.app/)
